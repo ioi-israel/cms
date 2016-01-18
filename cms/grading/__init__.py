@@ -227,7 +227,7 @@ def get_compilation_commands(language, source_filenames, executable_filename,
         command = ["/usr/bin/g++"]
         if for_evaluation:
             command += ["-DEVAL"]
-        command += ["-static", "-O2", "-std=c++11",
+        command += ["-static", "-O2", "-std=c++0x",
                     "-o", executable_filename]
         command += source_filenames
         commands.append(command)
