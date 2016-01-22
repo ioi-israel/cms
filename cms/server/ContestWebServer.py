@@ -2054,4 +2054,5 @@ _cws_handlers = [
     (r"/testing", UserTestInterfaceHandler),
     (r"/printing", PrintingHandler),
     (r"/stl/(.*)", StaticFileGzHandler, {"path": config.stl_path}),
+    (r"/orendoc/(.*)", StaticFileGzHandler, {"path": config.orendoc_path}),
 ]
