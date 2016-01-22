@@ -76,7 +76,7 @@ LANGUAGE_NAMES = {
 
 LANGUAGES = [LANG_C, LANG_CPP, LANG_PASCAL, LANG_PYTHON, LANG_PHP, LANG_JAVA,
              LANG_CS]
-DEFAULT_LANGUAGES = [LANG_C, LANG_CPP, LANG_PASCAL]
+DEFAULT_LANGUAGES = [LANG_C, LANG_CPP, LANG_JAVA, LANG_CS]
 
 # A reference for extension-based automatic language detection.
 # (It's more difficult with headers because ".h" is ambiguous.)
