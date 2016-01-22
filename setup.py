@@ -115,6 +115,7 @@ def do_setup():
                     "cmsranking",
                     "cmscontrib",
                     "cmscontrib.updaters",
+                    "cmscontrib.israel",
                     "cmstaskenv",
                     "cmstestsuite",
                     "cmstestsuite.web",
@@ -163,6 +164,9 @@ def do_setup():
 
                   "cmsYamlImporter=cmscompat.YamlImporter:main",
                   "cmsYamlReimporter=cmscompat.YamlReimporter:main",
+                  
+                  "PrepareTask=cmscontrib.israel.PrepareTask:main",
+                  "PrepareContest=cmscontrib.israel.PrepareContest:main",
               ]
           },
           keywords="ioi programming contest grader management system",
