@@ -167,6 +167,7 @@ def do_setup():
                   
                   "PrepareTask=cmscontrib.israel.PrepareTask:main",
                   "PrepareContest=cmscontrib.israel.PrepareContest:main",
+                  "CreateTaskModule=cmscontrib.israel.CreateTaskModule:main",
               ]
           },
           keywords="ioi programming contest grader management system",
