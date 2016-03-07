@@ -78,6 +78,24 @@ $(document).ready(function () {
             </div>
         </div>
     {% end %}
+    {% if "Testing" in contest.description %}
+        <div id="maintenance-message" style="top: 10%; position: fixed; text-align: center; margin: auto 0px; width: 100%; color: red; direction: rtl; line-height: 32px; font-weight: bold; font-family: david;">
+            <table style="margin: 0px auto;">
+                <tbody>
+                    <tr>
+                        <td style="vertical-align: middle;">
+                            <img style="width: 100px; padding: 32px; height: 100px;" src="http://www.ioi-training.tau.ac.il/orendoc/images/stop-sign.svg">
+                        </td>
+                        <td style="vertical-align: middle;">
+                            <span style="font-size: 40px;">המערכת במצב תחזוקה.</span>
+                            <br>
+                            <span style="font-size: 24px;">אנא נסו שוב עוד מעט!</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    {% end %}
         <div class="login_container">
             <div class="login_box hero-unit">
                 <h1>{{ _("Welcome") }}</h1>
