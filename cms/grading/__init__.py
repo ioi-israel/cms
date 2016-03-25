@@ -261,7 +261,7 @@ def get_compilation_commands(language, source_filenames, executable_filename,
         commands.append(command)
     elif language == LANG_CS:
         command = ["/bin/sh", "-c"]
-        command += ["/usr/bin/mcs /t:exe /out:%(exec)s.exe %(source)s; "
+        command += ["/usr/bin/dmcs /t:exe /out:%(exec)s.exe %(source)s; "
                     "/usr/bin/mkbundle --static %(exec)s.exe -o %(exec)s;" %
                     {"source": source_filenames[0],
                      "exec": executable_filename}]
