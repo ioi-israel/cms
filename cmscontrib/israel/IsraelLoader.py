@@ -168,6 +168,9 @@ class IsraelLoader(Loader):
         args["name"] = contest_name
         args["description"] = self.module.get_long_name()
 
+        # Contest languages.
+        args["languages"] = self.module.get_languages()
+
         # Contest times.
         args["start"] = make_datetime(mktime(datetime.strptime(
             self.module.get_begin_time(), TIME_FORMAT).timetuple()))
