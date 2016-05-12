@@ -104,6 +104,7 @@ class PrepareTask(object):
         self.stubs = None
         self.attachments = None
         self.headers = None
+        self.grader = None
 
         try:
             self.manager = self.module.get_manager()
@@ -114,6 +115,11 @@ class PrepareTask(object):
             self.scorer = self.module.get_scorer()
         except Exception:
             logger.warning("Task does not specify a scorer.")
+
+        try:
+            self.grader = self.module.get_grader()
+        except Exception:
+            logger.warning("Task does not specify a grader.")
 
         try:
             self.statement = self.module.get_statement()
@@ -340,7 +346,7 @@ class PrepareTask(object):
         elif self.task_type == "batch":
             args["task_type"] = "Batch"
             args["task_type_parameters"] = '["%s", ["%s", "%s"], "%s"]' %\
-                (("grader" if self.stubs else "alone"),
+                (("grader" if self.grader else "alone"),
                  (""),
                  (""),
                  ("comparator" if self.scorer else "diff"))
@@ -380,6 +386,20 @@ class PrepareTask(object):
                     (self.task_name, lang))
 
                 args["managers"] += [Manager("stub%s" % ext, digest)]
+
+        if self.grader:
+            grader_path = os.path.join(self.task_dir, self.grader)
+            if not os.path.isfile(grader_path):
+                logger.critical("Missing grader: %s" % grader_path)
+
+            ext = os.path.splitext(self.grader)[1]
+            lang = SOURCE_EXT_TO_LANGUAGE_MAP[ext]
+
+            digest = self.file_cacher.put_file_from_path(
+                grader_path, "Grader for task %s and language %s" %
+                (self.task_name, lang))
+
+            args["managers"] += [Manager("grader%s" % ext, digest)]
 
         if self.headers:
             for header in self.headers:
