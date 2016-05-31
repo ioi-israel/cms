@@ -46,7 +46,7 @@ from cms.db import Contest, User, Task, Statement, Attachment, \
 from cmscontrib import touch
 
 from cmscontrib.israel.Constants import TASKS_DIR, MODULE_FILE, \
-    PREPARE_TIME_FILE
+    PREPARE_TIME_FILE, EXTERNAL_IO
 
 
 logger = logging.getLogger(__name__)
@@ -60,6 +60,7 @@ class PrepareTask(object):
         # Read the task's module.
         self.task_name = task_name
         self.task_dir = os.path.join(TASKS_DIR, task_name)
+        self.io_dir = self.task_dir
         self.module_path = os.path.join(self.task_dir, MODULE_FILE)
 
         if not os.path.isfile(self.module_path):
@@ -105,6 +106,7 @@ class PrepareTask(object):
         self.attachments = None
         self.headers = None
         self.grader = None
+        self.external_drive = None
 
         try:
             self.manager = self.module.get_manager()
@@ -140,6 +142,16 @@ class PrepareTask(object):
             self.headers = self.module.get_headers()
         except Exception:
             logger.warning("Task does not specify headers.")
+            
+        try:
+            self.external_drive = self.module.use_external_drive()
+            if self.external_drive:
+                self.io_dir = os.path.join(EXTERNAL_IO, self.task_name)
+                if not os.path.isdir(self.io_dir):
+                    os.mkdir(self.io_dir)
+                logger.info("Task will not use cms/tasks directory.")
+        except Exception:
+            logger.info("Task will use cms/tasks directory.")
 
         logger.info("Finished reading meta data from module.")
 
@@ -155,7 +167,7 @@ class PrepareTask(object):
 
         # Create directories if needed.
         for dir_name in ("input", "output"):
-            full_dir = os.path.join(self.task_dir, dir_name)
+            full_dir = os.path.join(self.io_dir, dir_name)
             if not os.path.isdir(full_dir):
                 os.mkdir(full_dir)
 
@@ -198,8 +210,8 @@ class PrepareTask(object):
     def write_io_file(self, testcase, count):
         logger.info("Task %s: testcase %s." % (self.task_name, count))
 
-        input_path = os.path.join(self.task_dir, "input/input%s.txt" % count)
-        hints_path = os.path.join(self.task_dir, "output/output%s.txt" % count)
+        input_path = os.path.join(self.io_dir, "input/input%s.txt" % count)
+        hints_path = os.path.join(self.io_dir, "output/output%s.txt" % count)
 
         if "data" in testcase:
             chunks = testcase["data"]
@@ -437,9 +449,9 @@ class PrepareTask(object):
 
         for subtask in self.subtask_structure:
             for testcase in xrange(subtask[1]):
-                input_path = os.path.join(self.task_dir, "input",
+                input_path = os.path.join(self.io_dir, "input",
                                           "input%d.txt" % i)
-                output_path = os.path.join(self.task_dir, "output",
+                output_path = os.path.join(self.io_dir, "output",
                                            "output%d.txt" % i)
 
                 input_digest = self.file_cacher.put_file_from_path(

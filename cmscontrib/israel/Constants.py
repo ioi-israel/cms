@@ -27,6 +27,8 @@ SYNC_DIR = path.expanduser("~/Dropbox")
 SYNC_DIR_IOI = path.join(SYNC_DIR, "ioi")
 SYNC_DIR_CMS = path.join(SYNC_DIR_IOI, "cms")
 
+EXTERNAL_IO = "/data/tasks_io"
+
 USERS_DIR = path.join(SYNC_DIR_CMS, "users")
 USERNAME_SEP = "."
 USER_HIDDEN_PREFIX = "bl0ck"
