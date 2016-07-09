@@ -365,13 +365,19 @@ class PrepareTask(object):
 
         elif self.task_type == "twosteps":
             args["task_type"] = "TwoSteps"
-            args["task_type_parameters"] = "[]"
+            args["task_type_parameters"] = '["%s"]' %\
+                ("comparator" if self.scorer else "diff")
 
             manager_path = os.path.join(self.task_dir, self.manager)
 
             if not os.path.isfile(manager_path):
                 logger.critical("Missing manager: %s" % manager_path)
                 sys.exit(1)
+                
+            task_object.submission_format = [
+                SubmissionFormatElement("encoder.%l"),
+                SubmissionFormatElement("decoder.%l"),
+                ]
 
             digest = self.file_cacher.put_file_from_path(
                 manager_path, "Manager for task %s" % self.task_name)
