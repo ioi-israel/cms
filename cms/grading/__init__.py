@@ -263,7 +263,7 @@ def get_compilation_commands(language, source_filenames, executable_filename,
         command = ["/bin/sh", "-c"]
         command += ["/usr/bin/dmcs /t:exe /out:%(exec)s.exe %(source)s; "
                     "/usr/bin/mkbundle --static %(exec)s.exe -o %(exec)s;" %
-                    {"source": source_filenames[0],
+                    {"source": " ".join(source_filenames),
                      "exec": executable_filename}]
         commands.append(command)
     else:
