@@ -121,7 +121,7 @@ class IsraelLoader(Loader):
         module_abs = os.path.join(CONTESTS_DIR, path, MODULE_FILE)
         if os.path.isfile(module_abs):
             return module_abs
-        
+
         path_last_dir = os.path.split(path)[-1]
         module_abs = os.path.join(CONTESTS_DIR, path_last_dir, MODULE_FILE)
         if os.path.isfile(module_abs):

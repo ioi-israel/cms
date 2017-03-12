@@ -142,7 +142,7 @@ class PrepareTask(object):
             self.headers = self.module.get_headers()
         except Exception:
             logger.warning("Task does not specify headers.")
-            
+
         try:
             self.external_drive = self.module.use_external_drive()
             if self.external_drive:
@@ -373,7 +373,7 @@ class PrepareTask(object):
             if not os.path.isfile(manager_path):
                 logger.critical("Missing manager: %s" % manager_path)
                 sys.exit(1)
-                
+
             task_object.submission_format = [
                 SubmissionFormatElement("encoder.%l"),
                 SubmissionFormatElement("decoder.%l"),
