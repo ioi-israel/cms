@@ -197,11 +197,21 @@ class IsraelLoader(Loader):
             users_text = f.read()
 
         self.users = {}
+        self.hidden_users = set()
 
         for line in users_text.splitlines():
-            if line and not line.startswith(COMMENT_PREFIX):
-                user, password = line.split()
-                self.users[user] = password
+            line = line.strip()
+            if not line or line.startswith(COMMENT_PREFIX):
+                continue
+            parts = line.split()
+            hidden = False
+            if USER_HIDDEN_PREFIX in parts:
+                parts.remove(USER_HIDDEN_PREFIX)
+                hidden = True
+            user, password = parts
+            self.users[user] = password
+            if hidden:
+                self.hidden_users.add(user)
 
         # Get task names.
         task_names = self.module.get_task_names()
@@ -260,7 +270,7 @@ class IsraelLoader(Loader):
         args["last_name"] = " ".join(name_parts[1:])
 
         # Hidden users.
-        args["hidden"] = self.users[username].startswith(USER_HIDDEN_PREFIX)
+        args["hidden"] = username in self.hidden_users
 
         return User(**args)
 

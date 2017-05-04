@@ -31,7 +31,7 @@ EXTERNAL_IO = "/data/tasks_io"
 
 USERS_DIR = path.join(SYNC_DIR_CMS, "users")
 USERNAME_SEP = "."
-USER_HIDDEN_PREFIX = "bl0ck"
+USER_HIDDEN_PREFIX = "HIDDEN"
 
 CONTESTS_DIR = path.join(SYNC_DIR_CMS, "contests")
 TASKS_DIR = path.join(SYNC_DIR_CMS, "tasks")
