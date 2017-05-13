@@ -2056,4 +2056,5 @@ _cws_handlers = [
     (r"/stl/(.*)", StaticFileGzHandler, {"path": config.stl_path}),
     (r"/orendoc/(.*)", StaticFileGzHandler, {"path": config.orendoc_path}),
     (r"/other/(.*)", StaticFileGzHandler, {"path": config.misc_path}),
+    (r"/public-scoreboard/(.*)", StaticFileGzHandler, {"path": config.public_scoreboard_path}),
 ]
