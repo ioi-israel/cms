@@ -102,6 +102,9 @@ class ContestImporter(BaseImporter):
             if old_contest is not None:
                 if self.update_contest:
                     if contest_has_changed:
+                        raise Exception("Cannot update contest in database: "
+                                        "this drops all participations. "
+                                        "See issue #775.")
                         self._update_object(old_contest, contest)
                     contest = old_contest
                 elif self.update_tasks:
