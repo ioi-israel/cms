@@ -102,10 +102,26 @@ class ContestImporter(BaseImporter):
             if old_contest is not None:
                 if self.update_contest:
                     if contest_has_changed:
-                        raise Exception("Cannot update contest in database: "
-                                        "this drops all participations. "
-                                        "See issue #775.")
-                        self._update_object(old_contest, contest)
+                        # Updating a contest causes participations to be
+                        # dropped, unless they are explicitly ignored,
+                        # as done below. Not ignoring them leads to
+                        # loss of submissions! Issue #775.
+                        #
+                        # We cannot completely skip updating the contest,
+                        # because e.g. if contest and old_contest contain
+                        # a different list of tasks, this would lead to
+                        # corruption (even a different order is sufficient).
+                        #
+                        # But we can afford not to update participations,
+                        # because the users list is not expected to change,
+                        # so modifications to it can be done manually.
+                        # Note that additions do happen automatically (below),
+                        # only deletions and modifications don't.
+                        logger.warning("Updating contest in database, but "
+                                       "ignoring participations. "
+                                       "See issue #775.")
+                        self._update_object(old_contest, contest,
+                                            ignore=set(["participations"]))
                     contest = old_contest
                 elif self.update_tasks:
                     contest = old_contest
