@@ -106,6 +106,11 @@ HANDLERS = [
 
     (r"/communication", CommunicationHandler),
     (r"/question", QuestionHandler),
+
+    # Custom for v1.3-israel
+
+    (r"/public/(.*)", StaticFileGzHandler, {"path": config.custom_contestants_path}),
+    (r"/private/(.*)", StaticFileGzHandler, {"path": config.custom_instructors_path}),
 ]
 
 
