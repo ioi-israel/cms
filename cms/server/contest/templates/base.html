@@ -97,7 +97,29 @@ $(document).ready(function () {
             </div>
         </div>
     {% end %}
-        <div class="login_container">
+    {% if "_test_" in contest.description %}
+        {% comment If the contest contains '_test_', we are in maintenance mode. Display message and decrease login opacity. %}
+        {% set login_opacity = 0.25 %}
+        <div id="maintenance-message" style="top: 10%; position: fixed; text-align: center; margin: auto 0px; width: 100%; color: red; direction: rtl; line-height: 32px; font-weight: bold; font-family: david;">
+            <table style="margin: 0px auto;">
+                <tbody>
+                    <tr>
+                        <td style="vertical-align: middle;">
+                            <img style="width: 100px; padding: 32px; height: 100px;" src="{{ url_root }}/public/images/stop-sign.svg">
+                        </td>
+                        <td style="vertical-align: middle;">
+                            <span style="font-size: 40px;">המערכת במצב תחזוקה.</span>
+                            <br>
+                            <span style="font-size: 24px;">אנא נסו שוב עוד מעט!</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        {% set login_opacity = 1 %}
+    {% end %}
+        <div class="login_container" style="opacity: {{ _(login_opacity) }};">
             <div class="login_box hero-unit">
                 <h1>{{ _("Welcome") }}</h1>
                 <p>{{ _("Please log in") }}</p>
