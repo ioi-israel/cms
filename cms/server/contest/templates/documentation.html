@@ -6,6 +6,12 @@
     <h1>{{ _("Documentation") }}</h1>
 </div>
 
+<h2>{{ _("Basic input and output examples") }}</h2>
+<h3>{{ _("Right click your language, and save the file to disk.")}}</h3>
+<h3><a href="{{ url_root }}/public/docs/basic_stdio/program.cpp" style="color:#008800">{{ _("C++ examples") }}</a></h3>
+<h3><a href="{{ url_root }}/public/docs/basic_stdio/Task.java" style="color:#008800">{{ _("Java examples") }}</a></h3>
+<h3><a href="{{ url_root }}/public/docs/basic_stdio/Program.cs" style="color:#008800">{{ _("C# examples") }}</a></h3>
+
 <h2>{{ _("Programming languages and libraries") }}</h2>
 
 {% if any(".cpp" in get_language(lang).source_extensions for lang in contest.languages) %}
