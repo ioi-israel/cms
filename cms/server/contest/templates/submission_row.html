@@ -23,7 +23,18 @@
         <a class="details">{{ _("details") }}</a>
     </td>
     {% if score_type is not None and score_type.max_public_score != 0 %}
-    <td class="public_score undefined">{{ _("N/A") }}</td>
+    <td class="public_score undefined">{{ _("N/A") }}
+
+        {% if autotesting and (s_idx - 1) < len(auto_submit_info) %}
+            <span style="float: right; width: 32px; text-align: right;">
+                {{ escape(str(auto_submit_info[s_idx - 1]["score"])) }}
+            </span>
+            <span style="float: right;">
+                {{ escape(auto_submit_info[s_idx - 1]["name"]) }}
+                <span style="color: red;">&#10008;</span>
+            </span>
+        {% end %}
+    </td>
     {% end %}
     {% if score_type is not None and score_type.max_public_score != score_type.max_score %}
     <td class="total_score undefined">{{ _("N/A") }}</td>
@@ -63,6 +74,20 @@
     {% if score_type.max_public_score > 0 %}
     <td class="public_score {{ get_score_class(sr.public_score, score_type.max_public_score) }}">
         {{ score_type.format_score(sr.public_score, score_type.max_public_score, sr.public_score_details, task.score_precision, _) }}
+
+        {% if autotesting and (s_idx - 1) < len(auto_submit_info) %}
+            <span style="float: right; width: 32px; text-align: right;">
+                {{ escape(str(auto_submit_info[s_idx - 1]["score"])) }}
+            </span>
+            <span style="float: right;">
+                {{ escape(auto_submit_info[s_idx - 1]["name"]) }}
+                {% if auto_submit_info[s_idx - 1]["score"] == sr.public_score %}
+                    <span style="color: green;">&#10004;</span>
+                {% else %}
+                    <span style="color: red;">&#10008;</span>
+                {% end %}
+            </span>
+        {% end %}
     </td>
     {% end %}
 

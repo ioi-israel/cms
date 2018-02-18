@@ -258,6 +258,15 @@ $(document).ready(function () {
         {% end %}
         </tr>
     {% else %}
+        {% set autotesting = ("autotester" in current_user.user.username) %}
+        {% if autotesting %}
+            {% try %}
+                {% from server_utils.tasks.TaskSandbox import processor_from_contest %}
+                {% set auto_submit_info = processor_from_contest(task.name, contest.name).get_auto_submit_items() %}
+            {% except %}
+                {% set auto_submit_info = [] %}
+            {% end %}
+        {% end %}
         {% for s_idx, s in enumerate(sorted(submissions, key=lambda s: s.timestamp, reverse=True)) %}
             {% set s_idx = len(submissions) - s_idx %}
             {% set sr = s.get_result(s.task.active_dataset) %}
