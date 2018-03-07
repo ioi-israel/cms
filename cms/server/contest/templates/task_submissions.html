@@ -85,6 +85,8 @@ $(document).ready(function () {
 </div>
 
 
+{% set disable_submission = (contest.stop.year >= 3000) and (not current_user.unrestricted) %}
+{% if not disable_submission %}
 <h2 style="margin-bottom: 10px">{{ _("Submit a solution") }}</h2>
 
 {% if submissions_left is not None %}
@@ -150,7 +152,7 @@ $(document).ready(function () {
     </div>
 {% end %}
 </div>
-
+{% end %}
 
 <h2 style="margin: 40px 0 10px">{{ _("Previous submissions") }}</h2>
 
