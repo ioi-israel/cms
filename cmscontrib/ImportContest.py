@@ -224,6 +224,8 @@ class ContestImporter(BaseImporter):
                         args["ip"] = p["ip"]
                     if "password" in p:
                         args["password"] = p["password"]
+                    if "unrestricted" in p:
+                        args["unrestricted"] = p["unrestricted"]
 
                     session.add(Participation(**args))
                 else:
