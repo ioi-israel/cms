@@ -874,7 +874,13 @@ class IsolateSandbox(SandboxBase):
         """
         os.chmod(self.path, 0755)
         for filename in os.listdir(self.path):
-            os.chmod(os.path.join(self.path, filename), 0755)
+            # In TwoSteps tasks with a checker, this chmod can cause an error.
+            # Need to revisit this problem in the next upgrade.
+            try:
+                os.chmod(os.path.join(self.path, filename), 0755)
+            except Exception:
+                logger.warn("Could not chmod: %s",
+                            os.path.join(self.path, filename))
 
     def allow_writing_only(self, paths):
         """Set permissions in so that the user can write only some paths.
